@@ -354,9 +354,14 @@ function startMicrobreak () {
   }
 
   for (let displayIdx = 0; displayIdx < numberOfDisplays(); displayIdx++) {
+    const electron = require('electron')
+    const screens = electron.screen.getAllDisplays()
+    const theScreen = screens[displayIdx]
+    const { width, height } = theScreen.workAreaSize
+
     const windowOptions = {
-      width: 800,
-      height: 600,
+      width: Number.parseInt(width * 0.8),
+      height: Number.parseInt(height * 0.8),
       autoHideMenuBar: true,
       icon: windowIconPath(),
       resizable: false,
@@ -398,6 +403,9 @@ function startMicrobreak () {
       microbreakWinLocal.webContents.send('progress', startTime,
         breakDuration, strictMode, postponable, postponableDurationPercent, settings.get('endBreakShortcut'))
       microbreakWinLocal.setAlwaysOnTop(true)
+      setTimeout(() => {
+        microbreakWinLocal.center()
+      }, 0)
     })
     microbreakWinLocal.loadURL(modalPath)
     microbreakWinLocal.setVisibleOnAllWorkspaces(true)
@@ -458,9 +466,14 @@ function startBreak () {
   }
 
   for (let displayIdx = 0; displayIdx < numberOfDisplays(); displayIdx++) {
+    const electron = require('electron')
+    const screens = electron.screen.getAllDisplays()
+    const theScreen = screens[displayIdx]
+    const { width, height } = theScreen.workAreaSize
+
     const windowOptions = {
-      width: 800,
-      height: 600,
+      width: Number.parseInt(width * 0.8),
+      height: Number.parseInt(height * 0.8),
       autoHideMenuBar: true,
       icon: windowIconPath(),
       resizable: false,
@@ -502,6 +515,9 @@ function startBreak () {
       breakWinLocal.webContents.send('progress', startTime,
         breakDuration, strictMode, postponable, postponableDurationPercent, settings.get('endBreakShortcut'))
       breakWinLocal.setAlwaysOnTop(true)
+      setTimeout(() => {
+        breakWinLocal.center()
+      }, 0)
     })
     breakWinLocal.loadURL(modalPath)
     breakWinLocal.setVisibleOnAllWorkspaces(true)
