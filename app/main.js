@@ -35,7 +35,7 @@ app.setAppUserModelId('net.hovancik.stretchly')
 
 global.shared = {
   isNewVersion: false,
-  isContributor: false
+  isContributor: true
 }
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -773,6 +773,16 @@ function getTrayMenu () {
       label: i18next.t('main.pause'),
       submenu: [
         {
+          label: '15 minutes',
+          click: function () {
+            pauseBreaks(3600 * 0.25 * 1000)
+          }
+        }, {
+          label: '30 minutes',
+          click: function () {
+            pauseBreaks(3600 * 0.5 * 1000)
+          }
+        }, {
           label: i18next.t('main.forHour'),
           click: function () {
             pauseBreaks(3600 * 1000)
@@ -781,11 +791,6 @@ function getTrayMenu () {
           label: i18next.t('main.for2Hours'),
           click: function () {
             pauseBreaks(3600 * 2 * 1000)
-          }
-        }, {
-          label: i18next.t('main.for5Hours'),
-          click: function () {
-            pauseBreaks(3600 * 5 * 1000)
           }
         }, {
           label: i18next.t('main.untilMorning'),
@@ -805,6 +810,15 @@ function getTrayMenu () {
     }, {
       label: i18next.t('main.resetBreaks'),
       click: resetBreaks
+    })
+
+    trayMenu.push({
+      type: 'separator'
+    }, {
+      label: 'Pause 15 minutes',
+      click: function () {
+        pauseBreaks(3600 * 0.25 * 1000)
+      }
     })
   }
 
